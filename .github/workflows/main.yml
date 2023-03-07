@@ -46,8 +46,8 @@ jobs:
       - name: Download OpenWrt SDK
         run: |
           cd ..
-          wget "https://downloads.openwrt.org/releases/22.03.3/targets/armvirt/64/openwrt-sdk-22.03.3-armvirt-64_gcc-11.2.0_musl.Linux-x86_64.tar.xz" -o "openwrt.tar.xz"
-          tar xf openwrt.tar.xz
+          wget https://downloads.openwrt.org/releases/22.03.3/targets/armvirt/64/openwrt-sdk-22.03.3-armvirt-64_gcc-11.2.0_musl.Linux-x86_64.tar.xz
+          tar xf openwrt-sdk-22.03.3-armvirt-64_gcc-11.2.0_musl.Linux-x86_64.tar.xz
           mv "openwrt-sdk-22.03.3-armvirt-64_gcc-11.2.0_musl.Linux-x86_64" "openwrt"
 
 
