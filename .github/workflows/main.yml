@@ -1,0 +1,53 @@
+name: Build OpenWrt Release Package
+
+on:
+  push:
+    branches:
+      - main
+env:
+  ARCH: "armvirt"
+  TARGET: "armvirt_64"
+  RELEASE_PACKAGE_NAME: "luci-app-tinyfm"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout OpenWrt
+        uses: actions/checkout@v2
+
+      - name: Update Feeds
+        run: |
+          cd openwrt
+          ./scripts/feeds update -a
+
+      - name: Install Feeds
+        run: |
+          cd openwrt
+          ./scripts/feeds install -a
+
+      - name: Configure SDK
+        run: |
+          cd openwrt
+          make menuconfig
+          echo "CONFIG_TARGET_${ARCH}_${TARGET}=y" >> .config
+          echo "CONFIG_${RELEASE_PACKAGE_NAME}=y" >> .config
+          make defconfig
+
+      - name: Build Release Package
+        run: |
+          cd openwrt
+          make package/${RELEASE_PACKAGE_NAME}/compile V=s
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: "${RELEASE_PACKAGE_NAME}"
+          path: "openwrt/bin/packages/${ARCH}/${TARGET}/${RELEASE_PACKAGE_NAME}*.ipk"
+
+      - name: Create Github Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: "openwrt/bin/packages/${ARCH}/${TARGET}/${RELEASE_PACKAGE_NAME}*.ipk"
+          tag_name: "v1.0.0"
+          release_name: "Release v1.0.0"
+          body: "Release description goes here."
