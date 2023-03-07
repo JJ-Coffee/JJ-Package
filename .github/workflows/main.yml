@@ -12,26 +12,42 @@ on:
         options:
           - luci-app-tinyfm
 env:
+  TZ: Asia/Jakarta
   ARCH: "armvirt"
   TARGET: "armvirt_64"
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
+    if: ${{ github.event.repository.owner.id }} == ${{ github.event.sender.id }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
       - name: Initialization environment
+        id: init
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
-          sudo apt-get update
-          sudo apt-get -y install curl git tar
+          docker rmi `docker images -q`
+          [[ -n "${AGENT_TOOLSDIRECTORY}" ]] && sudo rm -rf "${AGENT_TOOLSDIRECTORY}"
+          sudo rm -rf /usr/share/dotnet /etc/apt/sources.list.d /usr/local/lib/android 2>/dev/null
+          sudo -E apt-get -y update
+          sudo -E apt-get -y purge azure-cli ghc* zulu* llvm* firefox google* dotnet* powershell openjdk* mongodb* moby* || true
+          sudo -E apt-get -y install $(curl -fsSL https://is.gd/depend_ubuntu2204_openwrt)
+          sudo -E systemctl daemon-reload
+          #sudo -E apt-get -y full-upgrade
+          sudo -E apt-get -y autoremove --purge
+          sudo -E apt-get clean
+          sudo mkdir -p /workdir
+          sudo chown ${USER}:${GROUPS} /workdir
+          sudo timedatectl set-timezone "${TZ}"
+          echo "status=success" >> ${GITHUB_OUTPUT}
 
       - name: Download OpenWrt SDK
+        working-directory: /workdir
         run: |
-          cd
+          df -hT ${PWD}
           wget https://downloads.openwrt.org/releases/22.03.3/targets/armvirt/64/openwrt-sdk-22.03.3-armvirt-64_gcc-11.2.0_musl.Linux-x86_64.tar.xz
           tar xf openwrt-sdk-22.03.3-armvirt-64_gcc-11.2.0_musl.Linux-x86_64.tar.xz
           mv "openwrt-sdk-22.03.3-armvirt-64_gcc-11.2.0_musl.Linux-x86_64" "openwrt"
