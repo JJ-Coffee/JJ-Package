@@ -17,8 +17,7 @@ env:
   TARGET: "armvirt_64"
 jobs:
   build:
-    runs-on: ubuntu-22.04
-    if: ${{ github.event.repository.owner.id }} == ${{ github.event.sender.id }}
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
@@ -29,43 +28,33 @@ jobs:
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
-          docker rmi `docker images -q`
-          [[ -n "${AGENT_TOOLSDIRECTORY}" ]] && sudo rm -rf "${AGENT_TOOLSDIRECTORY}"
-          sudo rm -rf /usr/share/dotnet /etc/apt/sources.list.d /usr/local/lib/android 2>/dev/null
-          sudo -E apt-get -y update
-          sudo -E apt-get -y purge azure-cli ghc* zulu* llvm* firefox google* dotnet* powershell openjdk* mongodb* moby* || true
-          sudo -E apt-get -y install $(curl -fsSL https://is.gd/depend_ubuntu2204_openwrt)
-          sudo -E systemctl daemon-reload
-          #sudo -E apt-get -y full-upgrade
-          sudo -E apt-get -y autoremove --purge
-          sudo -E apt-get clean
-          sudo mkdir -p /workdir
-          sudo chown ${USER}:${GROUPS} /workdir
-          sudo timedatectl set-timezone "${TZ}"
-          echo "status=success" >> ${GITHUB_OUTPUT}
+          sudo apt-get update
+          sudo apt-get -y install curl git tar
 
       - name: Download OpenWrt SDK
         working-directory: /workdir
         run: |
-          df -hT ${PWD}
+          cd ..
+          mkdir tmp
           wget https://downloads.openwrt.org/releases/22.03.3/targets/armvirt/64/openwrt-sdk-22.03.3-armvirt-64_gcc-11.2.0_musl.Linux-x86_64.tar.xz
+          cd \tmp
           tar xf openwrt-sdk-22.03.3-armvirt-64_gcc-11.2.0_musl.Linux-x86_64.tar.xz
           mv "openwrt-sdk-22.03.3-armvirt-64_gcc-11.2.0_musl.Linux-x86_64" "openwrt"
 
 
       - name: Update Feeds
         run: |
-          cd openwrt
+          cd tmp/openwrt
           ./scripts/feeds update -a
 
       - name: Install Feeds
         run: |
-          cd openwrt
+          cd tmp/openwrt
           ./scripts/feeds install -a
       
       - name: clone package
         run: |
-          cd openwrt
+          cd tmp/openwrt
           git clone https://github.com/JJ-Coffee/JJ-Package.git jjpackage
           echo "src-link jjpackage /root/openwrt/jjpackage" >> feeds.conf.default
           ./scripts/feeds update -a
@@ -73,7 +62,7 @@ jobs:
           
       - name: Configure SDK
         run: |
-          cd openwrt
+          cd tmp/openwrt
           make menuconfig
           echo "CONFIG_TARGET_${ARCH}_${TARGET}=y" >> .config
           echo "CONFIG_${{ github.event.inputs.package }}=y" >> .config
@@ -81,19 +70,19 @@ jobs:
 
       - name: Build Release Package
         run: |
-          cd openwrt
+          cd tmp/openwrt
           make package/${{ github.event.inputs.package }}/compile V=s
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
           name: "${{ github.event.inputs.package }}"
-          path: "openwrt/bin/packages/${ARCH}/${TARGET}/${{ github.event.inputs.package }}*.ipk"
+          path: "tmp/openwrt/bin/packages/${ARCH}/${TARGET}/${{ github.event.inputs.package }}*.ipk"
 
       - name: Create Github Release
         uses: softprops/action-gh-release@v1
         with:
-          files: "openwrt/bin/packages/${ARCH}/${TARGET}/${{ github.event.inputs.package }}*.ipk"
+          files: "tmp/openwrt/bin/packages/${ARCH}/${TARGET}/${{ github.event.inputs.package }}*.ipk"
           tag_name: "v1.0.0"
           release_name: "Release v1.0.0"
           body: "Release description goes here."
