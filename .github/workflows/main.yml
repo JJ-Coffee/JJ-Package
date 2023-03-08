@@ -32,7 +32,6 @@ jobs:
           sudo apt-get -y install curl git tar
 
       - name: Download OpenWrt SDK
-        working-directory: /workdir
         run: |
           cd ..
           mkdir tmp
