@@ -35,9 +35,9 @@ jobs:
         run: |
           cd ..
           mkdir tmp
-          wget https://downloads.openwrt.org/releases/22.03.3/targets/armvirt/64/openwrt-sdk-22.03.3-armvirt-64_gcc-11.2.0_musl.Linux-x86_64.tar.xz
-          cd tmp
-          tar xf openwrt-sdk-22.03.3-armvirt-64_gcc-11.2.0_musl.Linux-x86_64.tar.xz
+          wget "https://downloads.openwrt.org/releases/22.03.3/targets/armvirt/64/openwrt-sdk-22.03.3-armvirt-64_gcc-11.2.0_musl.Linux-x86_64.tar.xz" -o "./tmp/sdk.tar.xz"
+          cd \tmp
+          tar xf sdk.tar.xz
           mv "openwrt-sdk-22.03.3-armvirt-64_gcc-11.2.0_musl.Linux-x86_64" "openwrt"
 
 
