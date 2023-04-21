@@ -10,7 +10,7 @@ include $(TOPDIR)/rules.mk
 
 LUCI_TITLE:=LuCI Tiny File Manager App
 LUCI_PKGARCH:=all
-LUCI_DEPENDS:=+php8 +php8-cgi +php8-mod-ctype +php8-mod-fileinfo +php8-mod-gettext +php8-mod-gmp +php8-mod-iconv +php8-mod-mbstring +php8-mod-pcntl +php8-mod-session +php8-mod-zip +php8-mod-curl +php8-mod-dom +php8-mod-filter +php8-mod-opcache +php8-mod-pdo +zoneinfo-asia
+LUCI_DEPENDS:=+php8 +php8-cgi +php8-mod-ctype +php8-mod-fileinfo +php8-mod-gettext +php8-mod-gmp +php8-mod-iconv +php8-mod-mbstring +php8-mod-pcntl +php8-mod-session +php8-mod-zip +php8-mod-filter +zoneinfo-asia
 
 PKG_NAME:=luci-app-tinyfm
 PKG_VERSION:=2.5.3
