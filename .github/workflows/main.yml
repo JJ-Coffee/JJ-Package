@@ -35,7 +35,7 @@ jobs:
         ./scripts/feeds update -a
         ./scripts/feeds install -a
         make defconfig
-        make package/luci-app-tinyfm/compile V=s
+        make package/luci-app-tinyfm2/compile V=s
 
     - name: Upload compiled IPK
       uses: actions/upload-artifact@v4
