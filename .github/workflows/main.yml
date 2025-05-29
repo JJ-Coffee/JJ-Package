@@ -27,7 +27,7 @@ jobs:
 
     - name: Copy package into SDK
       run: |
-        cp -r ./luci-app-tinyfm ./openwrt-sdk/package/
+        cp -r ./luci-app-tinyfm2 ./openwrt-sdk/package/
 
     - name: Build package
       run: |
