@@ -42,5 +42,5 @@ jobs:
       with:
         name: luci-app-tinyfm
         path: |
-          openwrt-sdk/bin/packages/*/*/*.ipk
+          openwrt-sdk/bin/packages/*/*/luci-app-tinyfm_*.ipk
           
