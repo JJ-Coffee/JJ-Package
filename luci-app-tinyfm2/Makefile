@@ -31,11 +31,7 @@ define Package/$(PKG_NAME)/install
 	chmod -R 755 /root/www/tinyfm/*
 	chmod -R 755 /root/www/tinyfm/assets/*
 	[ ! -d /root/www/tinyfm/rootfs ] && ln -s / /root/www/tinyfm/rootfs
-	if [ -d /etc/openclash ]; then \
-	    if [ ! -e /www/tinyfm/openclash ]; then \
-	        ln -s /etc/openclash /www/tinyfm/openclash; \
-	    fi; \
-	fi
+	[ ! -d /www/tinyfm/openclash ] && ln -s /etc/openclash /www/tinyfm/openclash
 endef
 
 define Package/$(PKG_NAME)/postinst
@@ -48,11 +44,7 @@ define Package/$(PKG_NAME)/postinst
 	chmod -R 755 /www/tinyfm/*
 	chmod -R 755 /www/tinyfm/assets/*
 	[ ! -d /www/tinyfm/rootfs ] && ln -s / /www/tinyfm/rootfs
-	if [ -d /etc/openclash ]; then
-	    if [ ! -e /www/tinyfm/openclash ]; then
-	        ln -s /etc/openclash /www/tinyfm/openclash;
-	    fi;
-	fi
+	[ ! -d /www/tinyfm/openclash ] && ln -s /etc/openclash /www/tinyfm/openclash
 	if ! grep -q ".php=/usr/bin/php8-cgi" /etc/config/uhttpd; then
 		echo -e "  Log : system not using php-cgi, patching php config ..."
 		logger "  Log : system not using php-cgi, patching php config..."
