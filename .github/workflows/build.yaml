@@ -19,17 +19,16 @@ jobs:
           file wget libelf-dev ccache zstd
 
     - name: Cache OpenWrt SDK build artifacts
+      id: cache-sdk
       uses: actions/cache@v3
       with:
-        path: |
-          openwrt-sdk/dl
-          openwrt-sdk/build_dir
-          openwrt-sdk/staging_dir
-          openwrt-sdk/.config
-        key: ${{ runner.os }}-openwrt-sdk-
+        path: openwrt-sdk
+        key: Linux-openwrt-sdk-${{ hashFiles('openwrt-sdk/.config') }}
+        restore-keys: |
+          Linux-openwrt-sdk-
 
     - name: Clone OpenWrt SDK
-      if: steps.cache.outputs.cache-hit != 'true'
+      if: steps.cache-sdk.outputs.cache-hit != 'true'
       run: |
         export SDK_URL="https://downloads.openwrt.org/releases/24.10.1/targets/armsr/armv8/openwrt-sdk-24.10.1-armsr-armv8_gcc-13.3.0_musl.Linux-x86_64.tar.zst"
         wget $SDK_URL
