@@ -26,6 +26,7 @@ jobs:
         key: Linux-openwrt-sdk-
         restore-keys: |
           Linux-openwrt-sdk-
+          Linux-
 
     - name: Clone OpenWrt SDK
       if: steps.cache-sdk.outputs.cache-hit != 'true'
