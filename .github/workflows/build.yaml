@@ -26,7 +26,7 @@ jobs:
           openwrt-sdk/build_dir
           openwrt-sdk/staging_dir
           openwrt-sdk/.config
-        key: ${{ runner.os }}-openwrt-sdk-${{ hashFiles('**/luci-app-tinyfm2/**') }}
+        key: ${{ runner.os }}-openwrt-sdk-
 
     - name: Clone OpenWrt SDK
       if: steps.cache.outputs.cache-hit != 'true'
