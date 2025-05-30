@@ -58,7 +58,7 @@ define Package/$(PKG_NAME)/postinst
 		logger "  Log : system not using php-cgi, patching php config..."
 		uci set uhttpd.main.ubus_prefix='/ubus'
 		uci set uhttpd.main.interpreter='.php=/usr/bin/php8-cgi'
-		uci set uhttpd.main.index_page='cgi-bin/luci'
+		uci set uhttpd.main.index_page='index.php'
 		uci commit uhttpd
 		echo -e "  Log : patching system with php configuration done ..."
 		echo -e "  Log : restarting some apps ..."
