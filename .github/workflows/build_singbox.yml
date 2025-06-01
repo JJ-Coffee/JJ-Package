@@ -48,6 +48,8 @@ jobs:
           ./scripts/feeds install -a
         fi
         if [ ! -f .config ]; then
+          rm -rf feeds/packages/net/sing-box
+          echo -e "CONFIG_PACKAGE_sing-box=m" >> .config
           make defconfig
         fi
 
