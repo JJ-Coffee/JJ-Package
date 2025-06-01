@@ -101,11 +101,12 @@ GO_PKG_TAGS:=$(subst $(space),$(comma),$(strip \
 	$(if $(CONFIG_SINGBOX_WITH_WIREGUARD),with_wireguard) \
 ))
 
-define Package/sing-box/conffiles
+define Package/$(PKG_NAME)/conffiles
 endef
 
-define Package/sing-box/install
-	$(INSTALL_DIR) $(1)/usr/bin/
+define Package/$(PKG_NAME)/install
+	$(call GoPackage/Package/Install/Bin,$(1))
 endef
 
-$(eval $(call BuildPackage,sing-box))
+$(eval $(call GoBinPackage,$(PKG_NAME)))
+$(eval $(call BuildPackage,$(PKG_NAME)))
