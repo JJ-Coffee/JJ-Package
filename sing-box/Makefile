@@ -97,16 +97,14 @@ PKG_CONFIG_DEPENDS:= \
 	CONFIG_SING_BOX_WITH_ACME \
 	CONFIG_SING_BOX_WITH_CLASH_API \
 	CONFIG_SING_BOX_WITH_DHCP \
-	CONFIG_SING_BOX_WITH_ECH \
 	CONFIG_SING_BOX_WITH_GRPC \
 	CONFIG_SING_BOX_WITH_GVISOR \
 	CONFIG_SING_BOX_WITH_QUIC \
-	CONFIG_SING_BOX_WITH_REALITY_SERVER \
 	CONFIG_SING_BOX_WITH_UTLS \
 	CONFIG_SING_BOX_WITH_V2RAY_API \
 	CONFIG_SING_BOX_WITH_WIREGUARD
 
-GO_PKG_TAGS:=with_quic,with_clash_api,with_dhcp,with_ech,with_gvisor,with_utls,with_wireguard
+GO_PKG_TAGS:=with_quic,with_clash_api,with_dhcp,with_gvisor,with_utls,with_wireguard
 
 define Build/Compile
 	@echo "Build tags: $(GO_PKG_TAGS)"
