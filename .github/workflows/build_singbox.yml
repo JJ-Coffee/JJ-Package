@@ -43,15 +43,15 @@ jobs:
     - name: Update feeds and defconfig only if needed
       run: |
         cd openwrt-sdk
-        if [ ! -d ./feeds ]; then
-          ./scripts/feeds update -a
-          ./scripts/feeds install -a
-        fi
+        //if [ ! -d ./feeds ]; then
+        ./scripts/feeds update -a
+        ./scripts/feeds install -a
+        //fi
         rm -rf feeds/packages/net/sing-box
-        if [ ! -f .config ]; then
-          echo -e "CONFIG_PACKAGE_sing-box=m" >> .config
-          make defconfig
-        fi
+        //if [ ! -f .config ]; then
+        echo -e "CONFIG_PACKAGE_sing-box=m" >> .config
+        make defconfig
+        //fi
 
     - name: Build package
       run: |
