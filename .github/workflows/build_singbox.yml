@@ -1,4 +1,4 @@
-name: Build IPK Package
+name: Build IPK Package sing-box
 
 on:
   workflow_dispatch:
@@ -18,7 +18,18 @@ jobs:
           gettext git libncurses-dev libssl-dev python3-setuptools rsync unzip zlib1g-dev \
           file wget libelf-dev ccache zstd
 
+    - name: Cache OpenWrt SDK build artifacts
+      id: cache-sdk
+      uses: actions/cache@v3
+      with:
+        path: openwrt-sdk
+        key: Linux-openwrt-sdk-${{ hashFiles('openwrt-sdk/.config') }}
+        restore-keys: |
+          Linux-openwrt-sdk-
+          Linux-
+
     - name: Clone OpenWrt SDK
+      if: steps.cache-sdk.outputs.cache-hit != 'true'
       run: |
         export SDK_URL="https://downloads.openwrt.org/releases/24.10.1/targets/armsr/armv8/openwrt-sdk-24.10.1-armsr-armv8_gcc-13.3.0_musl.Linux-x86_64.tar.zst"
         wget $SDK_URL
@@ -27,20 +38,28 @@ jobs:
 
     - name: Copy package into SDK
       run: |
-        cp -r ./luci-app-tinyfm2 ./openwrt-sdk/package/
+        cp -r ./sing-box ./openwrt-sdk/package/
+
+    - name: Update feeds and defconfig only if needed
+      run: |
+        cd openwrt-sdk
+        if [ ! -d ./feeds ]; then
+          ./scripts/feeds update -a
+          ./scripts/feeds install -a
+        fi
+        if [ ! -f .config ]; then
+          make defconfig
+        fi
 
     - name: Build package
       run: |
         cd openwrt-sdk
-        ./scripts/feeds update -a
-        ./scripts/feeds install -a
-        make defconfig
-        make package/luci-app-tinyfm2/compile V=s
+        make package/sing-box/compile V=s
 
     - name: Upload compiled IPK
       uses: actions/upload-artifact@v4
       with:
-        name: luci-app-tinyfm
+        name: sing-box
         path: |
-          openwrt-sdk/bin/packages/*/*/luci-app-tinyfm_*.ipk
+          openwrt-sdk/bin/packages/*/*/sing-box_*.ipk
           
