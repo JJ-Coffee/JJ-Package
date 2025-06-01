@@ -44,6 +44,7 @@ define Package/sing-box/config
 
 		config SINGBOX_WITH_ACME
 			bool "Build with ACME TLS certificate issuer support"
+			default y
 
 		config SINGBOX_WITH_CLASH_API
 			bool "Build with Clash API support"
@@ -51,6 +52,7 @@ define Package/sing-box/config
 
 		config SINGBOX_WITH_DHCP
 			bool "Build with DHCP support, see DHCP DNS transport."
+			default y
 
 		config SINGBOX_WITH_GRPC
 			bool "Build with standard gRPC support"
