@@ -64,7 +64,7 @@ define Package/sing-box/config
 			default y
 
 		config SINGBOX_WITH_TAILSCALE
-			bool "Build with TAILSCALE extension support for TAILSCALE"
+			bool "Build with TAILSCALE extension support"
 			default y
 
 		config SINGBOX_WITH_UTLS
@@ -84,7 +84,6 @@ PKG_CONFIG_DEPENDS:= \
 	CONFIG_SINGBOX_WITH_ACME \
 	CONFIG_SINGBOX_WITH_CLASH_API \
 	CONFIG_SINGBOX_WITH_DHCP \
-	CONFIG_SINGBOX_WITH_GRPC \
 	CONFIG_SINGBOX_WITH_GVISOR \
 	CONFIG_SINGBOX_WITH_QUIC \
 	CONFIG_SINGBOX_WITH_TAILSCALE \
@@ -96,7 +95,6 @@ GO_PKG_TAGS:=$(subst $(space),$(comma),$(strip \
 	$(if $(CONFIG_SINGBOX_WITH_ACME),with_acme) \
 	$(if $(CONFIG_SINGBOX_WITH_CLASH_API),with_clash_api) \
 	$(if $(CONFIG_SINGBOX_WITH_DHCP),with_dhcp) \
-	$(if $(CONFIG_SINGBOX_WITH_GRPC),with_grpc) \
 	$(if $(CONFIG_SINGBOX_WITH_GVISOR),with_gvisor) \
 	$(if $(CONFIG_SINGBOX_WITH_QUIC),with_quic) \
 	$(if $(CONFIG_SINGBOX_WITH_TAILSCALE),with_tailscale) \
