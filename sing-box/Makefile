@@ -52,9 +52,6 @@ define Package/sing-box/config
 		config SINGBOX_WITH_DHCP
 			bool "Build with DHCP support, see DHCP DNS transport."
 
-		config SINGBOX_WITH_EMBEDDED_TOR
-			bool "Build with embedded Tor support"
-
 		config SINGBOX_WITH_GRPC
 			bool "Build with standard gRPC support"
 
@@ -64,10 +61,6 @@ define Package/sing-box/config
 
 		config SINGBOX_WITH_QUIC
 			bool "Build with QUIC support"
-			default y
-
-		config SINGBOX_WITH_REALITY_SERVER
-			bool "Build with reality TLS server support, see TLS."
 			default y
 
 		config SINGBOX_WITH_TAILSCALE
@@ -91,11 +84,9 @@ PKG_CONFIG_DEPENDS:= \
 	CONFIG_SINGBOX_WITH_ACME \
 	CONFIG_SINGBOX_WITH_CLASH_API \
 	CONFIG_SINGBOX_WITH_DHCP \
-	CONFIG_SINGBOX_WITH_EMBEDDED_TOR \
 	CONFIG_SINGBOX_WITH_GRPC \
 	CONFIG_SINGBOX_WITH_GVISOR \
 	CONFIG_SINGBOX_WITH_QUIC \
-	CONFIG_SINGBOX_WITH_REALITY_SERVER \
 	CONFIG_SINGBOX_WITH_TAILSCALE \
 	CONFIG_SINGBOX_WITH_UTLS \
 	CONFIG_SINGBOX_WITH_V2RAY_API \
@@ -105,11 +96,9 @@ GO_PKG_TAGS:=$(subst $(space),$(comma),$(strip \
 	$(if $(CONFIG_SINGBOX_WITH_ACME),with_acme) \
 	$(if $(CONFIG_SINGBOX_WITH_CLASH_API),with_clash_api) \
 	$(if $(CONFIG_SINGBOX_WITH_DHCP),with_dhcp) \
-	$(if $(CONFIG_SINGBOX_WITH_EMBEDDED_TOR),with_embedded_tor) \
 	$(if $(CONFIG_SINGBOX_WITH_GRPC),with_grpc) \
 	$(if $(CONFIG_SINGBOX_WITH_GVISOR),with_gvisor) \
 	$(if $(CONFIG_SINGBOX_WITH_QUIC),with_quic) \
-	$(if $(CONFIG_SINGBOX_WITH_REALITY_SERVER),with_reality_server) \
 	$(if $(CONFIG_SINGBOX_WITH_TAILSCALE),with_tailscale) \
 	$(if $(CONFIG_SINGBOX_WITH_UTLS),with_utls) \
 	$(if $(CONFIG_SINGBOX_WITH_V2RAY_API),with_v2ray_api) \
