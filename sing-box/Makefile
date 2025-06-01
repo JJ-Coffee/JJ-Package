@@ -103,6 +103,8 @@ GO_PKG_TAGS:=$(subst $(space),$(comma),$(strip \
 	$(if $(CONFIG_SINGBOX_WITH_WIREGUARD),with_wireguard) \
 ))
 
+GO_PKG_BUILD_TAGS:=$(GO_PKG_TAGS)
+
 define Package/$(PKG_NAME)/conffiles
 endef
 
