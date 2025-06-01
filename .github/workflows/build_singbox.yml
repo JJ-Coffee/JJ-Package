@@ -52,6 +52,7 @@ jobs:
     - name: Build package
       run: |
         cd openwrt-sdk
+        make package/sing-box/clean
         make package/sing-box/compile V=s
 
     - name: Upload compiled IPK
