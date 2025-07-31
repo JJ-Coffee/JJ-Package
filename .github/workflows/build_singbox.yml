@@ -31,7 +31,7 @@ jobs:
     - name: Clone OpenWrt SDK
       if: steps.cache-sdk.outputs.cache-hit != 'true'
       run: |
-        export SDK_URL="https://downloads.openwrt.org/releases/24.10.1/targets/armsr/armv8/openwrt-sdk-24.10.1-armsr-armv8_gcc-13.3.0_musl.Linux-x86_64.tar.zst"
+        export SDK_URL="openwrt-sdk-24.10.2-armsr-armv8_gcc-13.3.0_musl.Linux-x86_64.tar.zst"
         wget $SDK_URL
         tar -I zstd -xvf openwrt-sdk-*.tar.zst -C . && sync && rm -f openwrt-sdk-*.tar.zst
         mv -f openwrt-sdk-* openwrt-sdk
