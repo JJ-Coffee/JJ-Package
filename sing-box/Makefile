@@ -5,7 +5,7 @@ PKG_VERSION:=1.12.1
 PKG_RELEASE:=
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=https://codeload.github.com/SagerNet/sing-box/tar.gz/v$(PKG_VERSION)?
+PKG_SOURCE_URL:=https://codeload.github.com/taamarin/sing-box/tar.gz/v$(PKG_VERSION)?
 PKG_HASH:=8c7de6f996c9d3ad363d60b52828dc649a579ae8a5f0b596fc8ff7ea7622908d
 
 PKG_LICENSE:=GPL-3.0-or-later
