@@ -45,7 +45,7 @@ jobs:
         sed -i 's/GO_VERSION_MAJOR_MINOR:=1.23/GO_VERSION_MAJOR_MINOR:=1.24/' Makefile
         sed -i 's/GO_VERSION_PATCH:=.*/GO_VERSION_PATCH:=5/' Makefile
         sed -i 's/^PKG_HASH.*/PKG_HASH:=74fdb09f2352e2b25b7943e56836c9b47363d28dec1c8b56c4a9570f30b8f59f/' Makefile
-        head -n 30 Makefile
+        head -n 500 Makefile
     
     - name: Update feeds and defconfig only if needed
       run: |
