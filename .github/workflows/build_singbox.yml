@@ -59,9 +59,9 @@ jobs:
       run: |
         cd openwrt-sdk
         make package/golang/host/clean
-        make package/golang/host/compile -j$(nproc)
+        make package/golang/host/compile -j$(nproc) V=s
         make package/sing-box/clean
-        make package/sing-box/compile V=s
+        make package/sing-box/compile -j$(nproc) V=s
 
     - name: Upload compiled IPK
       uses: actions/upload-artifact@v4
