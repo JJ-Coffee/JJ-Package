@@ -48,7 +48,9 @@ jobs:
         sed -i 's/GO_VERSION_MAJOR_MINOR:=1.24/GO_VERSION_MAJOR_MINOR:=1.25/' Makefile
         sed -i 's/GO_VERSION_PATCH:=.*/GO_VERSION_PATCH:=0/' Makefile
         sed -i 's/^PKG_HASH.*/PKG_HASH:=4bd01e91297207bfa450ea40d4d5a93b1b531a5e438473b2a06e18e077227225/' Makefile
-        head -n 25 Makefile
+        sed -i 's/BOOTSTRAP_1_22_SOURCE:=.*/BOOTSTRAP_1_22_SOURCE:=go1.22.8.src.tar.gz/' Makefile
+        sed -i 's/BOOTSTRAP_1_22_HASH:=.*/BOOTSTRAP_1_22_HASH:=df12c23ebf19dea0f4bf46a22cbeda4a3eca6f474f318390ce774974278440b8/' Makefile
+        head -n 60 Makefile
     
     - name: Update feeds and defconfig only if needed
       run: |
