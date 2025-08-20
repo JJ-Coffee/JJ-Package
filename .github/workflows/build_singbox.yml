@@ -42,9 +42,9 @@ jobs:
     - name: Patch Go to 1.25
       run: |
         cd openwrt-sdk/feeds/packages/lang/golang/golang
-        sed -i 's/GO_VERSION_MAJOR_MINOR:=1.23/GO_VERSION_MAJOR_MINOR:=1.25/' Makefile
-        sed -i 's/GO_VERSION_PATCH:=.*/GO_VERSION_PATCH:=0/' Makefile
-        sed -i 's/^PKG_HASH.*/PKG_HASH:=4bd01e91297207bfa450ea40d4d5a93b1b531a5e438473b2a06e18e077227225/' Makefile
+        sed -i 's/GO_VERSION_MAJOR_MINOR:=1.23/GO_VERSION_MAJOR_MINOR:=1.24/' Makefile
+        sed -i 's/GO_VERSION_PATCH:=.*/GO_VERSION_PATCH:=5/' Makefile
+        sed -i 's/^PKG_HASH.*/PKG_HASH:=74fdb09f2352e2b25b7943e56836c9b47363d28dec1c8b56c4a9570f30b8f59f/' Makefile
         head -n 30 Makefile
     
     - name: Update feeds and defconfig only if needed
