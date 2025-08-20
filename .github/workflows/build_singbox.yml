@@ -39,7 +39,13 @@ jobs:
     - name: Copy package into SDK
       run: |
         cp -r ./sing-box ./openwrt-sdk/package/
-
+    - name: Patch Go to 1.25
+      run: |
+        cd openwrt-sdk/feeds/packages/lang/golang
+        sed -i 's/GO_VERSION_MAJOR_MINOR:=1.23/GO_VERSION_MAJOR_MINOR:=1.24/' Makefile
+        sed -i 's/GO_VERSION_PATCH:=.*/GO_VERSION_PATCH:=5/' Makefile
+        head -n 20 Makefile
+    
     - name: Update feeds and defconfig only if needed
       run: |
         cd openwrt-sdk
@@ -52,6 +58,8 @@ jobs:
     - name: Build package
       run: |
         cd openwrt-sdk
+        make package/golang/host/clean
+        make package/golang/host/compile -j$(nproc)
         make package/sing-box/clean
         make package/sing-box/compile V=s
 
